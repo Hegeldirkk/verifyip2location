@@ -1,54 +1,38 @@
-import 'package:verifyip2location/src/base_response.dart';
-import 'package:verifyip2location/src/base_response_whois.dart';
-import 'package:verifyip2location/src/parse_location.dart';
+import 'package:verifyip2location/verifyip2location.dart' as verifyip2location;
+import 'package:verifyip2location/verifyip2location.dart';
 
-/// Package to verify personnal connexion
-/// by finding the geolacation of the person
-/// (City Name), region name, and country name
-/// Country Code
-/// if is used normal Proxy
-/// or tor / vpn
-///  you can find the position via latitude and longitude
-/// a botnet Malware infected devices.
+void main() async {
+  // Your API key
+  final apiKey = 'VOTRE_API_KEY';
 
-/// method to make an HTTP GET request [getIpgeo].
-Future<BaseHttpIkaResponse> getIpgeo(String ip2token,
-        {int? plan, String? option, String? ip, String? domain}) =>
-    _ip2location(ip2token, plan: plan, option: option, ip: ip, domain: domain);
+  // ip2location class
+  BaseHttpIkaResponse? ip2loc;
 
-/// method to make an HTTP GET request with [getDnsWhois].
-Future<HttpIkaWhoisService> getDnsWhois(String ip2token,
-        {int? plan, String? option, String? ip, String? domain}) =>
-    _ip2whois(ip2token, plan: plan, option: option, domain: domain);
+   // IP address you want to look up
+  final ipAddress = '8.8.8.8';
 
-/// Function to make an HTTP GET request and fund the response [_ip2location].
-Future<BaseHttpIkaResponse> _ip2location(String ip2token,
-    {int? plan, String? option, String? ip, String? domain}) async {
-  var parseLocation = ParseLocation();
+  // Plan you want to use (e.g, 'free = 0', 'starter = 1', 'plus = 2', 'security = 3', etc.)
+  int plan = 0;
 
-  /// Put default value (free plan)
-  plan ??= 0;
+  try {
+    // Using the getIpgeo function to retrieve data
+    ip2loc = await verifyip2location.getIpgeo(apiKey, ip: ipAddress, plan: plan, option: 'geoip');
 
-  assert(option != null,
-      "Expected option, but null was returned [geoip] or [whois]");
-    var ip2loc = parseLocation.parseHttp(ip2token,
-        chp: plan, option: option, ip: ip);
-
-  return ip2loc;
-}
-
-
-/// Function to make an HTTP GET request and fund the response [_ip2location].
-Future<HttpIkaWhoisService> _ip2whois(String ip2token,
-    {int? plan, String? option, String? domain}) async {
-  var parseLocation = ParseLocation();
-
-  /// Put default value (free plan)
-  plan ??= 0;
-
-  assert(option != null,
-      "Expected option, but null was returned [geoip] or [whois]");
-    var ip2loc = parseLocation.domainWhois(ip2token, chp: plan, option: option, domain: domain);
-
-  return ip2loc;
+    // Get information
+    if (ip2loc.errorStatusCode == 10000 || ip2loc.errorStatusCode == 10001 ){
+      print('Adresse IP: ${ip2loc.resIp}');
+      print('Pays: ${ip2loc.countryName}');
+      print('Ville: ${ip2loc.cityName}');
+      print('Latitude: ${ip2loc.latitude}');
+      print('Longitude: ${ip2loc.longitude}');
+      print('As: ${ip2loc.as}');
+      // And so on for other data you want to use.
+    } else if (ip2loc.errorStatusCode == 10001){
+      print('Error message: ' + ip2loc.errorReasonPhrase!);
+    } else{
+        print('Error message: ' + ip2loc.errorReasonPhrase!);
+    }
+  } catch (e) {
+    print('An error occurred during the request : $e');
+  }
 }
