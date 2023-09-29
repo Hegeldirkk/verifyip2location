@@ -1,6 +1,6 @@
 name: verifyip2location
 description: Verifies the source of ip connections and domains from IP2Location and Whois ip2location.io.
-version: 1.0.2-dev.1
+version: 1.0.3-dev.1
 repository: https://github.com/Hegeldirkk/verifyip2location.git
 
 # This package supports all platforms listed below.

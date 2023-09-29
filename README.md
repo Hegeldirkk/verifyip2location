@@ -1,7 +1,9 @@
-# verifyip2location
+# IP2Location Dart Package
 Verifies the source of ip connections and domains from IP2Location ip2location.io.
 
-[![Static Badge](https://img.shields.io/badge/pub-v1.0.0-blue)](https://pub.dev/packages/verifyip2location)
+This Dart package is designed to enable you to verify geolocation and WHOIS information for IP addresses and domains. It is built on the IP2Location API, making it a powerful tool for understanding the location of personal connections.
+
+[![Static Badge](https://img.shields.io/badge/pub-v1.0.3-blue)](https://pub.dev/packages/verifyip2location)
 
 A Flutter ans dart plugin for get location and whois information.
 
@@ -9,7 +11,52 @@ A Flutter ans dart plugin for get location and whois information.
 |-------------|---------|-------|-------|--------|-----|-------------|
 | **Support** | SDK 16+ | 11.0+ | Any   | 10.14+ | Any | Windows 10+ |
 
+## Features
+
+    Retrieve geolocation data, including city name, region name, country name, and country code.
+    Detect the use of proxies, Tor, or VPN.
+    Get latitude and longitude coordinates of the location.
+    Identify devices infected with botnets or malware.
+    Fetch WHOIS information for domains.
+
 ## Usage
+
+
+- Retrieving Geolocation Data
+
+```
+import 'package:verifyip2location/verifyip2location.dart';
+
+void main() async {
+  String ip2token = 'YOUR_IP2LOCATION_API_KEY';
+  BaseHttpIkaResponse result = await getIpgeo(ip2token, ip: '8.8.8.8');
+  
+  // Use the resulting data as needed
+  print('Country: ${result.countryName}');
+  print('City: ${result.cityName}');
+  // ...
+}
+
+```
+
+ - Retrieving WHOIS Information for a Domain
+
+ ```
+ import 'package:verifyip2location/verifyip2location.dart';
+
+void main() async {
+  String ip2token = 'YOUR_IP2LOCATION_API_KEY';
+  HttpIkaWhoisService whoisResult = await getDnsWhois(ip2token, domain: 'example.com');
+  
+  // Use the resulting WHOIS data as needed
+  print('Domain Name: ${whoisResult.domain}');
+  print('Domain Owner: ${whoisResult.registrantName}');
+  // ...
+}
+```
+
+
+
 
 To use this plugin, add `verifyip2location` as a [github repository](https://github.com/Hegeldirkk/verifyip2location)
 
@@ -62,3 +109,15 @@ void main() async {
 
 ```
 
+Requirements
+
+    Dart SDK 2.0 or later.
+
+Notes
+
+    To use this package, you need to obtain an IP2Location API key from the official IP2Location website.
+    Ensure you configure your API key in your application before using this package.
+
+Author
+
+This package was created by [DIABAKATE IKARY RYANN](https://dirkk.tech).
