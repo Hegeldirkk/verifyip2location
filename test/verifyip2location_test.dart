@@ -15,12 +15,17 @@ void main() {
           "EF3080DDEA1CBF08D4BA41DEE162DE54",
           plan: 0,
           option: "geoip",
-          ip: "191.252.201.137");
+          ip: "191.252.201.137.");
 
       codecounrty = ip2loc!.countryCode;
     });
 
     test('Test if response is a Notnull', () {
+
+      if (ip2loc!.errorStatusCode == 10000 || ip2loc!.errorStatusCode == 10001 ){
+        print(ip2loc!.errorReasonPhrase);
+      }
+
       expect(codecounrty, isNotNull);
       print(ip2loc!.as);
       expect(ip2loc!.elevation, isNull);

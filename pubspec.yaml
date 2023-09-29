@@ -1,7 +1,17 @@
 name: verifyip2location
-description: A starting point for Dart libraries or applications.
-version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+description: Verifies the source of ip connections and domains from IP2Location and Whois ip2location.io.
+version: 1.0.0-dev.1
+repository: https://github.com/Hegeldirkk/verifyip2location.git
+
+# This package supports all platforms listed below.
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
 
 environment:
   sdk: ^3.1.0-213.0.dev
